@@ -5,4 +5,5 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+app.MapControllerRoute("default", "/{controller=recipe}/{action=new}/{id?}");
 app.Run();
