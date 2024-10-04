@@ -1,0 +1,26 @@
+@model List<CookBook.Models.Recipe>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Receitas</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <td>Nome</td>
+                <td>Avaliação</td>
+            </tr>
+        </thead>
+
+        @foreach (var recipe in Model) {
+            <tr>
+                <td>@recipe.Name</td>
+                <td>@recipe.Stars</td>
+            </tr>
+        }
+    </table>
+</body>
+</html>

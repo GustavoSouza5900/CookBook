@@ -5,6 +5,8 @@ public class Recipe {
     public string Name { get; set; }
     public string Steps { get; set; }
 
+    public float Stars { get; set; }
+
     public int UserId { get; set; }
 }
 

@@ -1,7 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.InMemory;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
-// builder.Services.AddDbContext<BookDatabase>(options => options.UseInMemoryDatabase("db"));
+builder.Services.AddDbContext<CookBookDB>(options => options.UseInMemoryDatabase("db"));
 
 var app = builder.Build();
 
