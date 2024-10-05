@@ -29,4 +29,9 @@ public class RecipeController : Controller {
     public ActionResult List() {
         return View(db.Recipes.ToList());
     }
+
+
+    public ActionResult Show(int id){
+        return View(db.Recipes.Single(e => e.RecipeId == id));
+    }
 }

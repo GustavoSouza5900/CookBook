@@ -20,7 +20,7 @@
         <tbody>
             @foreach (var recipe in Model) {
                 <tr>
-                    <td>@recipe.Name</td>
+                    <td><a href="/recipe/show/@recipe.RecipeId" class="btn ">@recipe.Name</a></td>
                     <td>@recipe.Stars</td>
                 </tr>
         }
