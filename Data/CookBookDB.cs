@@ -4,5 +4,6 @@ using Microsoft.EntityFrameworkCore;
 public class CookBookDB : DbContext {
     public CookBookDB(DbContextOptions options) : base(options) {}
     public DbSet<Recipe> Recipes { get; set; }
+    public DbSet<User> Users { get; set; }
 
 }
