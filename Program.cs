@@ -8,5 +8,5 @@ builder.Services.AddDbContext<CookBookDB>(options => options.UseInMemoryDatabase
 
 var app = builder.Build();
 
-app.MapControllerRoute("default", "/{controller=recipe}/{action=new}/{id?}");
+app.MapControllerRoute("default", "/{controller=recipe}/{action=list}/{id?}");
 app.Run();

@@ -10,10 +10,12 @@ namespace CookBook.Controllers;
             this.db = db;
         }
 
+
         [HttpGet]
         public ActionResult Register() {
             return View();
         }
+
 
         [HttpPost]
         public ActionResult Register(User model) {
@@ -25,8 +27,15 @@ namespace CookBook.Controllers;
             return View(model);
         }
 
+
         [HttpGet]
         public ActionResult Login() {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult Login(User model) {
             return View();
         }
 }
