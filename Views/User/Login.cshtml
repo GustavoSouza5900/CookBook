@@ -24,6 +24,11 @@
             <h1>Login de Usuário</h1>
 
             <form action="/user/login" method="post">
+                @if (ViewBag.Auth = false) {
+                    <div>
+                        <p>Nome de usuário ou senha inválidos</p>
+                    </div>
+                }
                 <div class="form-floating mb-3">
                     <input type="email" placeholder="Email" id="Email" name="Email" class="form-control" required>
                     <label for="Email">Email</label>

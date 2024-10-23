@@ -35,7 +35,19 @@ namespace CookBook.Controllers;
 
 
         [HttpPost]
-        public ActionResult Login(User model) {
-            return View();
+        public ActionResult Login(UserViewModel model) {
+            var usr = db.Users.FirstOrDefault(e => e.Email == model.Email && e.Password == model.Password);
+            
+            if (usr == null) {
+                ViewBag.Auth = false;
+                return View(model);
+            }
+
+            //else
+            ViewBag.Auth = true;
+            HttpContext.Session.SetInt32("UserId", usr.UserId);
+            HttpContext.Session.SetString("UserName", usr.Name);
+
+            return RedirectToAction("List", "Recipe");
         }
 }
