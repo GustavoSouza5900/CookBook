@@ -24,7 +24,7 @@
             <h1>Login de Usuário</h1>
 
             <form action="/user/login" method="post">
-                @if (ViewBag.Auth = false) {
+                @if (ViewBag.Auth == false) {
                     <div>
                         <p>Nome de usuário ou senha inválidos</p>
                     </div>

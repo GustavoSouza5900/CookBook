@@ -1,3 +1,4 @@
+@model int
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,6 +7,10 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <form action="/comment/save" method="post">
+        <input type="text" name="Content">
+        <input type="hidden" name="ParentId" value="@Model">
+        <button>Comentar</button>
+    </form>
 </body>
 </html>
