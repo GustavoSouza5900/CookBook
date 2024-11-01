@@ -13,9 +13,9 @@ public class CommentController : Controller {
     }
 
     [HttpGet]
-    public ActionResult Save(int RecipeId) {
-        if (ViewBag.Auth = true) {
-            return View(RecipeId);
+    public ActionResult Save(int id) {
+        if (HttpContext.Session.GetInt32("UserId") != null){
+            return View(id);
         }
         
         //else
@@ -24,13 +24,11 @@ public class CommentController : Controller {
 
 
     [HttpPost]
-    public void Save(Comment model) {
-        model.UserId = HttpContext.Session.GetInt32("UserId");
+    public ActionResult Save(Comment model) {
+        model.UserId = (int) HttpContext.Session.GetInt32("UserId");
+        model.UserName = HttpContext.Session.GetString("UserName");
         db.Comments.Add(model);
         db.SaveChanges();
-    }
-
-    public ActionResult Show() {
-        return View(db.Comments.ToList()); // Termina saporra (filtragem para exibir apenas comentarios da receita)
+        return RedirectToAction("Show", "Recipe", new {id = model.ParentId});
     }
 }

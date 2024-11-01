@@ -8,4 +8,6 @@ public class Comment {
     public int ParentId { get; set; }
     // Id of the author
     public int UserId { get; set; }
+
+    public string UserName { get; set; }
 }

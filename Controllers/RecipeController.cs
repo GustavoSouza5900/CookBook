@@ -32,6 +32,7 @@ public class RecipeController : Controller {
 
 
     public ActionResult Show(int id){
+        ViewBag.comments = db.Comments.Where(e => e.ParentId == id).ToList();
         return View(db.Recipes.Single(e => e.RecipeId == id));
     }
 }

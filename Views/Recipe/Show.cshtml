@@ -25,6 +25,20 @@
             <h1>@Model.Name</h1>
             <h2>Avaliação: @Model.Stars</h2>
             <p>@Model.Steps</p>
+            
+            <a href="/Comment/Save/@Model.RecipeId">Comentar</a>
+
+            <h2>comentários</h2>
+
+            @foreach (var cmt in ViewBag.comments){
+                <div class="p-2 rounded bg-dark-subtle text-secondary-emphasis">
+                    <p>Autor: @cmt.UserName</p>
+                    <p>@cmt.Content</p>
+                </div>
+                <br>
+            }
+
+
         </div>
     </main>
 </body>
