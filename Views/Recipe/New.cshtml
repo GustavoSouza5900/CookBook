@@ -23,16 +23,25 @@
         <div class="card-body">
             <h1>Create a new recipe</h1>
 
-            <form action="/recipe/new" method="post">
+            <form action="/recipe/new" method="post" enctype="multipart/form-data">
+                <h4>Nomeie sua receita</h4>
                 <div class="form-floating">
                     <input placeholder="Name" id="Name" name="Name" class="form-control">
                     <label for="Name">Recipe name</label>
                 </div>
                 <br>
+                <h4>Descreva sua receita</h4>
                 <div class="form-floating">
                     <input placeholder="Descreva a receita" name="Steps" class="form-control">
                     <label for="Steps">Passo a passo...</label>
+                    
                 </div>
+                <br>
+                    <div class="form">
+                        <h4>Insira uma imagem</h4>
+                        <input type="file" id="Imagem" name="Imagem" accept="image/*" class="form-control"/>
+                        
+                    </div>
                 <br>
                 <button class="btn btn-primary">Salvar</button>
             </form>

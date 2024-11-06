@@ -19,6 +19,10 @@ namespace CookBook.Controllers;
 
         [HttpPost]
         public ActionResult Register(User model) {
+            if (db.Users.FirstOrDefault(e => e.Email == model.Email)!= null){
+                ViewBag.Exist = true;
+                return View(model);
+            }
             if (ModelState.IsValid) {
                 db.Users.Add(model);
                 db.SaveChanges();
@@ -36,6 +40,7 @@ namespace CookBook.Controllers;
 
         [HttpPost]
         public ActionResult Login(UserViewModel model) {
+    
             var usr = db.Users.FirstOrDefault(e => e.Email == model.Email && e.Password == model.Password);
             
             if (usr == null) {

@@ -11,4 +11,5 @@ var app = builder.Build();
 
 app.UseSession();
 app.MapControllerRoute("default", "/{controller=recipe}/{action=list}/{id?}");
+app.UseStaticFiles();
 app.Run();

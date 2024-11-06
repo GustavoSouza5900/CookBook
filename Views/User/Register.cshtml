@@ -23,6 +23,11 @@
             <h1>Cadastro de Usuário</h1>
 
             <form action="/user/register" method="post">
+                @if (ViewBag.Exist == true){
+                    <div class="alert alert-danger">
+                        <p>Email já cadastrado</p>
+                    </div>
+                }
                 <div class="form-floating mb-3">
                     <input type="text" placeholder="Nome" id="Name" name="Name" class="form-control" required>
                     <label for="Name">Nome</label>
