@@ -26,7 +26,7 @@
             <form action="/user/login" method="post">
                 @if (ViewBag.Auth == false) {
                     <div>
-                        <p>Nome de usuário ou senha inválidos</p>
+                        <p class="alert alert-danger">Nome de usuário ou senha inválidos</p>
                     </div>
                 }
                 <div class="form-floating mb-3">

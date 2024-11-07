@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using CookBook.Models;
-using System.IO;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace CookBook.Controllers;
 
@@ -27,11 +26,8 @@ public class RecipeController : Controller {
 
     [HttpPost]
     public async Task<ActionResult> New(string Name, string Steps, IFormFile imagem) {
-        Recipe model = new Recipe(Name, Steps, "~/Image/Default.jpg");
-        db.Recipes.Add(model);
-        db.SaveChanges();
 
-        model = db.Recipes.Single(e => e.Name == Name);
+        Recipe model = new Recipe(Name, Steps, "~/Image/Default.jpg");
 
         if (imagem != null && imagem.Length > 0)
         {
@@ -43,10 +39,14 @@ public class RecipeController : Controller {
             }
 
             model.ImagePath = "~/Image/" + imagem.FileName;
-
-            db.SaveChanges();
         }
         
+        model.UserId = (int) HttpContext.Session.GetInt32("UserId");
+        model.UserName = HttpContext.Session.GetString("UserName");
+
+        db.Recipes.Add(model);
+        db.SaveChanges();
+
         return RedirectToAction("list");
     }
 
@@ -58,6 +58,36 @@ public class RecipeController : Controller {
 
     public ActionResult Show(int id){
         ViewBag.comments = db.Comments.Where(e => e.ParentId == id).ToList();
+
+        if (db.Recipes.Single(e => e.RecipeId == id).UserId == HttpContext.Session.GetInt32("UserId")) {
+            ViewBag.Owner = true;
+        }
+
         return View(db.Recipes.Single(e => e.RecipeId == id));
+    }
+
+
+    [HttpGet]
+    public ActionResult Update(int id){
+        Recipe model = db.Recipes.Single(e => e.RecipeId == id);
+        
+        if (HttpContext.Session.GetInt32("UserId") == null || HttpContext.Session.GetInt32("UserId") != model.UserId) {
+            return RedirectToAction("Show", new {id = model.RecipeId });
+        }
+
+        return View(model);
+    }
+
+
+    [HttpPost]
+    public ActionResult Update(Recipe model){
+        Recipe old = db.Recipes.Single(e => e.RecipeId == model.RecipeId);
+
+        old.Name = model.Name;
+        old.Steps = model.Steps;
+
+        db.SaveChanges();
+
+        return View(model);
     }
 }
