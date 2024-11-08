@@ -1,11 +1,11 @@
-@model int
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Ação perigosa!</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
 </head>
 <body class="container bg-secondary">
     <header class="text-center" style="margin-top: 10px;">
@@ -25,19 +25,11 @@
     </header>
     <main class="card bg-light">
         <div class="card-body">
-
-            <form action="/comment/save" method="post">
-                <div class="form-floating mb-3">
-                    <input type="text" name="Content" id="Content" placeholder="Comentário" class="form-control" required>
-                    <label for="Content">Comentário</label>
-                </div>
-                
-                <input type="hidden" name="ParentId" value="@Model">
-                <button class="btn btn-primary">Comentar</button>
-            </form>
+            <h4>Você está prestes a realizar uma ação perigosa, deseja realmente continuar?</h4>
+            <a href="/user/info/" class="btn btn-primary">Cancelar</a>
             <br>
-            <a href="/recipe/show/@Model" class="btn btn-danger">Voltar</a>
-
+            <br>
+            <a href="/user/delete/" class="btn btn-danger">Prosseguir</a>
         </div>
     </main>
 </body>

@@ -14,9 +14,13 @@
             <h2 class="col text-light">CookBook</h2>
             <div class="col-6"></div>
             <div class="col">
-                <a href="/recipe/list" class="btn btn-light">Receitas</a> 
-                <a href="/user/register" class="btn btn-light">New User</a>
-                <a href="/user/login" class="btn btn-light">Login</a>
+                <a href="/recipe/list" class="btn btn-light">Receitas</a>
+                @if (Context.Session.GetString("UserName") == null){
+                    <a href="/user/register" class="btn btn-light">New User</a>
+                    <a href="/user/login" class="btn btn-light">Login</a>
+                } else {
+                    <a href="/user/info" class="btn btn-light">@Context.Session.GetString("UserName")</a>
+                }
             </div>
         </div>
     </header>
@@ -37,6 +41,9 @@
                     <label for="Steps">Passo a passo...</label>
                 </div>
                 <br>
+
+                <input type="hidden" name="Id" value="@Model.RecipeId">
+
                 <button class="btn btn-primary">Salvar</button>
             </form>
             <br>

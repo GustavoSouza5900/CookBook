@@ -80,14 +80,36 @@ public class RecipeController : Controller {
 
 
     [HttpPost]
-    public ActionResult Update(Recipe model){
-        Recipe old = db.Recipes.Single(e => e.RecipeId == model.RecipeId);
+    public ActionResult Update(string Name, string Steps, int Id){
+        Recipe old = db.Recipes.Single(e => e.RecipeId == Id);
 
-        old.Name = model.Name;
-        old.Steps = model.Steps;
+        old.Name = Name;
+        old.Steps = Steps;
 
         db.SaveChanges();
 
-        return View(model);
+        return RedirectToAction("Show", new {id = Id});
+    }
+
+
+    public ActionResult Accept(int id){
+        return View(id);
+    }
+
+
+    public ActionResult Delete(int id){
+        Recipe model = db.Recipes.Single(e => e.RecipeId == id);
+        db.Recipes.Remove(model);
+        
+        // Deleta tmb os comentarios da receita
+        List<Comment> comments = db.Comments.Where(e => e.ParentId == id).ToList();
+
+        foreach (Comment comment in comments){
+            db.Comments.Remove(comment);
+        }
+
+        db.SaveChanges();
+
+        return RedirectToAction("List");
     }
 }
