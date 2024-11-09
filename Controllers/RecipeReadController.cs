@@ -15,7 +15,7 @@ public class RecipeReadController : Controller {
 
     public ActionResult Create (int Id) {
         if (HttpContext.Session.GetString("UserName") != null) {
-            if(db.RecipeReads.SingleOrDefault(e => e.UserId == HttpContext.Session.GetInt32("UserId")) == null){
+            if(db.RecipeReads.SingleOrDefault(e => e.UserId == HttpContext.Session.GetInt32("UserId") & e.RecipeId == Id) == null) {
                 RecipeRead rr = new RecipeRead(Id,(int) HttpContext.Session.GetInt32("UserId"), db.Recipes.Single(e => e.RecipeId == Id), db.Users.Single(e => e.UserId == (int)HttpContext.Session.GetInt32("UserId")));
                 
                 rr.Favorite = false;
@@ -34,6 +34,15 @@ public class RecipeReadController : Controller {
         if (HttpContext.Session.GetString("UserName") != null) {
             RecipeRead model = db.RecipeReads.Single(e => e.RecipeId == id & e.UserId == (int) HttpContext.Session.GetInt32("UserId"));
             model.Favorite = !model.Favorite;
+
+            Recipe Recipe = db.Recipes.Single(e => e.RecipeId == model.RecipeId);
+
+            if (model.Favorite) {
+                Recipe.FavCount += 1;
+            } else {
+                Recipe.FavCount -= 1;
+            }
+
             db.SaveChanges();
         }
         return RedirectToAction("Show", "Recipe", new { id = id });

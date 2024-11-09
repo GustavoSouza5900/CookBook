@@ -13,6 +13,8 @@ public class Recipe {
 
     public float Stars { get; set; }
 
+    public int FavCount { get; set; }
+
     public string ImagePath { get; set; }
 
     public int UserId { get; set; }

@@ -52,19 +52,7 @@ public class RecipeController : Controller {
 
 
     public ActionResult List() {
-        List<Recipe> Recipes = new List<Recipe>();
-
-        if (HttpContext.Session.GetString("UserName") != null & ViewBag.Favorites == true) {
-            var Ids = db.RecipeReads.Where(e => e.UserId == (int) HttpContext.Session.GetInt32("UserId")).Select(t => t.RecipeId).ToList();
-            foreach (var id in Ids) {
-                Recipes.Add((Recipe) Recipes.Where(e => e.RecipeId == id));
-            }
-
-        } else {
-            Recipes = db.Recipes.ToList();
-        }
-
-        return View(Recipes);
+        return View(db.Recipes.OrderBy(e => e.Name).OrderByDescending(e => e.Stars).OrderByDescending(e => e.FavCount).ToList());
     }
 
 
@@ -79,7 +67,7 @@ public class RecipeController : Controller {
         ViewBag.Fav = false;
 
         if (HttpContext.Session.GetString("UserName") != null) {
-            var NN = db.RecipeReads.Single(e => e.RecipeId == id & e.UserId == (int) HttpContext.Session.GetInt32("UserId"));
+            var NN = db.RecipeReads.SingleOrDefault(e => e.RecipeId == id & e.UserId == (int) HttpContext.Session.GetInt32("UserId"));
             ViewBag.Fav = NN.Favorite;
         }
 
@@ -140,7 +128,35 @@ public class RecipeController : Controller {
 
 
      public ActionResult Favorites() {
-        ViewBag.Favorites = true;
-        return RedirectToAction("List", "Recipe");
+        List<Recipe> Recipes = new List<Recipe>();
+
+        if (HttpContext.Session.GetString("UserName") != null) {
+            var Ids = db.RecipeReads.Where(e => e.UserId == (int) HttpContext.Session.GetInt32("UserId") & e.Favorite == true).OrderBy(n => n.Recipe.Name).Select(t => t.RecipeId).ToList();
+            foreach (var id in Ids) {
+                Recipes.Add(db.Recipes.Single(e => e.RecipeId == id));
+            }
+
+        } else {
+            Recipes = db.Recipes.ToList();
+        }
+
+        return View(Recipes);
+    }
+
+
+    public ActionResult History() {
+        List<Recipe> Recipes = new List<Recipe>();
+
+        if (HttpContext.Session.GetString("UserName") != null) {
+            var Ids = db.RecipeReads.Where(e => e.UserId == (int) HttpContext.Session.GetInt32("UserId")).Select(t => t.RecipeId).ToList();
+            foreach (var id in Ids) {
+                Recipes.Add(db.Recipes.Single(e => e.RecipeId == id));
+            }
+
+        } else {
+            Recipes = db.Recipes.ToList();
+        }
+
+        return View(Recipes);
     }
 }
