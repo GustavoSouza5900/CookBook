@@ -47,7 +47,7 @@ public class RecipeController : Controller {
         db.Recipes.Add(model);
         db.SaveChanges();
 
-        return RedirectToAction("list");
+        return RedirectToAction("List", "Recipe");
     }
 
 
@@ -63,7 +63,20 @@ public class RecipeController : Controller {
             ViewBag.Owner = true;
         }
 
+
+        ViewBag.Fav = false;
+
+        if (HttpContext.Session.GetString("UserName") != null) {
+            var NN = db.RecipeReads.Single(e => e.RecipeId == id & e.UserId == (int) HttpContext.Session.GetInt32("UserId"));
+            ViewBag.Fav = NN.Favorite;
+        }
+
         return View(db.Recipes.Single(e => e.RecipeId == id));
+    }
+
+
+    public ActionResult CreateTable(int id) {
+        return RedirectToAction("Create", "RecipeRead", new{id = id});
     }
 
 
