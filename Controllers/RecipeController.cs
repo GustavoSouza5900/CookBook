@@ -52,7 +52,19 @@ public class RecipeController : Controller {
 
 
     public ActionResult List() {
-        return View(db.Recipes.ToList());
+        List<Recipe> Recipes = new List<Recipe>();
+
+        if (HttpContext.Session.GetString("UserName") != null & ViewBag.Favorites == true) {
+            var Ids = db.RecipeReads.Where(e => e.UserId == (int) HttpContext.Session.GetInt32("UserId")).Select(t => t.RecipeId).ToList();
+            foreach (var id in Ids) {
+                Recipes.Add((Recipe) Recipes.Where(e => e.RecipeId == id));
+            }
+
+        } else {
+            Recipes = db.Recipes.ToList();
+        }
+
+        return View(Recipes);
     }
 
 
@@ -124,5 +136,11 @@ public class RecipeController : Controller {
         db.SaveChanges();
 
         return RedirectToAction("List");
+    }
+
+
+     public ActionResult Favorites() {
+        ViewBag.Favorites = true;
+        return RedirectToAction("List", "Recipe");
     }
 }
