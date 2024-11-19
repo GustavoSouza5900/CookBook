@@ -91,7 +91,11 @@ namespace CookBook.Controllers;
             old.Email = model.Email;
             old.Password = model.Password;
 
+            HttpContext.Session.SetString("UserName", model.Name);
+
             db.SaveChanges();
+
+            
 
             return RedirectToAction("Info");
         }
